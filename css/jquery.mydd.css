@@ -1,0 +1,148 @@
+.widget-mydd {
+	list-style:none;
+	margin:0;
+	padding:0;
+	
+	border: 1px solid #CCCCCC;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	
+	font-size: 14px;
+	background-color:#FFF;
+	position:relative;
+}
+
+.widget-mydd.active {
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.widget-mydd.disabled {
+	background-color: #EEEEEE;
+}
+
+.widget-mydd li {
+	margin: 0px;
+	height: 38px;
+	line-height: 38px;
+	padding:0px 6px;
+	
+	cursor:pointer;				
+}
+
+.disabled li{
+	cursor:default;
+}
+
+.mydd-items-list {
+	list-style:none;
+	position:absolute;
+	left:-1px;/*depends on border size*/
+	top:38px;
+	margin:0; padding:0;
+	background-color:#FFF;
+	z-index:100;
+	width:100%;
+	border:1px solid #CCC;
+	border-top:none;
+	border-radius: 0 0 4px 4px;
+}
+
+.mydd-items-list li{
+	transition: all 0.25s ease-in-out 0s;
+}
+
+.mydd-items-list li:last-child {
+	border-radius: 0 0 4px 4px;
+	padding-bottom: 2px;
+}
+
+.mydd-items-list .selected {
+	background-color: #FAFAFA;
+}
+
+.mydd-items-list .hover {
+	background-color: #f3f3f3;
+}
+
+.mydd-showlist-icon {
+	position:absolute; top:11px; right:8px;
+}
+
+.disabled .mydd-showlist-icon {
+	display:none;
+}
+
+.wcs-avatar {
+	vertical-align:middle; margin-right:4px; border-radius: 2px;
+	width: 30px; height:30px;
+}
+
+
+.mydd-small.widget-mydd li {
+	height: 34px;
+	line-height: 34px;
+}
+.mydd-small .mydd-items-list {
+	top: 34px;
+}
+.mydd-small .mydd-showlist-icon {
+	top: 10px;
+}
+.mydd-small .wcs-avatar {
+	width: 24px; height:24px;
+}
+
+
+
+
+
+
+
+
+
+
+/*!
+ * Thanx to Twitter Bootstrap
+ *
+ * Copyright 2012 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world @twitter by @mdo and @fat.
+ */
+body {
+  margin: 15px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #333333;
+  background-color: #ffffff;
+}
+
+
+[class^="icon-"],
+[class*=" icon-"] {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  *margin-right: .3em;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-image: url("../images/glyphicons-halflings.png");
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+}
+
+[class^="icon-"]:last-child,
+[class*=" icon-"]:last-child {
+  *margin-left: 0;
+}
+
+.icon-chevron-up {
+  background-position: -288px -120px;
+}
+
+.icon-chevron-down {
+  background-position: -313px -119px;
+}
