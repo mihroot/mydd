@@ -1,5 +1,7 @@
 (function( $ ) {
 	
+	var methods	= {};
+	
 	var oDDCount = 0; //opened drop downs count
 	
 	var opts = {
@@ -10,16 +12,32 @@
 	
 	
 	// Plugin definition.
-	$.fn.mydd = function( options ) {
-
-		opts = $.extend( {}, opts, options );
+	$.fn.mydd = function( method ) {
+				
+		if(typeof(method) === 'object' || !method) {
+			return methods.init.apply(this, arguments);
+		} else if(methods[method]) {
+			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+		} else {
+            $.error('Method ' + method + ' does not exists.');
+        }
 		
+	};	
 
-	 	
+	
+	
+	
+	methods.init = function (userOpts) {
+		
+		opts = $.extend( {}, opts, userOpts );
+		
 		return this.each(function() {
 			
 			var $mydd = $(this);	
 			
+			if($mydd.hasClass('widget-mydd')) {
+				return;
+			}
 			
 			var inputName = $mydd.attr('data-name');
 			if(!inputName) {
@@ -33,7 +51,7 @@
 			$mydd.addClass('widget-mydd').wrapInner('<li><ul class="mydd-items-list"></ul></li>');
 			
 			//save list object
-			var $mydd_il = $('.mydd-items-list', this);
+			var $mydd_il = $('.mydd-items-list', $mydd);
 			$mydd_il.hide();
 			
 			
@@ -54,7 +72,7 @@
 		
 			
 			
-			$mydd.children('li').prepend('<div class="mydd-current-choice">'+($selected.length?$selected.html():'')+'<i class="mydd-showlist-icon icon-chevron-down"></i></div>');
+			$mydd.children('li').prepend('<div class="mydd-current-choice"></div>');
 			
 			if($selected.length) {
 				selectItem($mydd, $selected, $hiddenInput);
@@ -75,7 +93,7 @@
 				} else {
 					open_dd($mydd, $mydd_il);
 				}
-            });
+			});
 			
 			
 			////////////////////
@@ -85,22 +103,51 @@
 					close_dd($mydd, $mydd_il);
 					return false;
 				}
-				
-				$mydd.find('.mydd-current-choice').html($(this).html()+'<i class="mydd-showlist-icon icon-chevron-down"></i>');
+
 							
 				//saveID.call(this);
 				selectItem($mydd, $(this), $hiddenInput);
 				
 				close_dd($mydd, $mydd_il);
 				
-            }).mouseenter(function(e) {
+			}).mouseenter(function(e) {
 				$(this).addClass('hover');
 			}).mouseleave(function(e) {
 				$(this).removeClass('hover');
 			});
 		});
+	}
 	
-	};
+	methods.open = function() {
+		return this.each(function () {
+			var $mydd = $(this);
+			open_dd($mydd, $('.mydd-items-list', $mydd));
+		});
+	}
+	
+	methods.close = function() {
+		return this.each(function () {
+			var $mydd = $(this);
+			close_dd($mydd, $('.mydd-items-list', $mydd));
+		});
+	}
+	
+	methods.reset_dd = function() {
+		return this.each(function () {
+			var $mydd = $(this);
+			
+			if($mydd.hasClass('disabled'))
+				return false;
+			
+			var $hiddenInput = $mydd.prev('.mydd-hidden-input');
+			var $mydd_il = $('.mydd-items-list', $mydd);
+			var $selected = $('li:first', $mydd_il);
+			
+			selectItem($mydd, $selected, $hiddenInput);
+		});
+	}
+	
+	
  
 	
 	
@@ -183,6 +230,8 @@
 				
 		var data_id = $item.attr('data-id');
 		if(!data_id) data_id = '';
+			
+		$mydd.find('.mydd-current-choice').html($item.html()+'<i class="mydd-showlist-icon icon-chevron-down"></i>');
 		
 		$hiddenInput.val(data_id);
 		if(opts.onchange) {
